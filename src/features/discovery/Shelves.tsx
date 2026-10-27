@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import type { Game } from "../../games";
 import type { PagePartProps } from "../registry";
 import { getShelves, type Shelves as ShelvesData } from "./api";
+import { GameImage } from "../../GameImage";
+
+// LOCAL DEV: Sample shelves data for preview without backend
+import { SAMPLE_SHELVES } from "../../sample-tournament";
 
 const ROWS: { key: keyof ShelvesData; title: string; note?: string }[] = [
   { key: "continue_playing", title: "Continue playing" },
@@ -17,7 +21,13 @@ export default function Shelves({ games, user }: PagePartProps) {
   const [shelves, setShelves] = useState<ShelvesData | null>(null);
   useEffect(() => {
     let live = true;
-    getShelves().then((s) => live && setShelves(s)).catch(() => {});
+    getShelves()
+      .then((s) => live && setShelves(s))
+      .catch(() => {
+        // LOCAL DEV FALLBACK: Use sample shelves data when API is unavailable
+        console.log("[Local Dev] Shelves API unavailable, using sample shelves data");
+        live && setShelves(SAMPLE_SHELVES as any);
+      });
     return () => { live = false; };
   }, [user?.id]);
   if (!shelves || !games) return null;
@@ -34,7 +44,7 @@ export default function Shelves({ games, user }: PagePartProps) {
               <li key={g.slug} className="game">
                 <a className="game-link" href={`/games/${g.slug}`}>
                   <div className="art" style={{ background: `linear-gradient(135deg, ${g.colors[0]}, ${g.colors[1]})` }}>
-                    {g.cover ? <img src={g.cover} alt="" loading="lazy" decoding="async" /> : <span>{g.title.charAt(0)}</span>}
+                    <GameImage game={g} alt={`${g.title} game cover`} />
                   </div>
                   <div className="info">
                     <h3>{g.title}</h3>

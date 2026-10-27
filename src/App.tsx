@@ -28,6 +28,9 @@ import PageParts from "./features/PageParts";
 import { useFeature } from "./features/flags";
 import { LeaderboardPage, TournamentBanner, TournamentPage, useTournament } from "./Tournament";
 import { ABOUT, QUESTIONS } from "./home-copy";
+import { SAMPLE_GAMES } from "./sample-games";
+import { SAMPLE_TOURNAMENT } from "./sample-tournament";
+import { SAMPLE_SHELVES } from "./sample-tournament";
 
 // Set when a game sent the user here to sign in: we send them back afterwards.
 const returnTo = gameReturnUrl();
@@ -107,7 +110,12 @@ export default function App({ view = "home", gameName, indieId, featurePage }: {
   const refreshGames = useCallback(() => {
     listGames()
       .then((list) => setGames(list.map(toCard)))
-      .catch(() => setGames((g) => g ?? []));
+      .catch(() => {
+        // LOCAL DEV FALLBACK: Use sample data when API is unavailable
+        // This lets you preview the full homepage without a backend
+        console.log("[Local Dev] API unavailable, using sample games data");
+        setGames(SAMPLE_GAMES);
+      });
     const token = localStorage.getItem("token");
     if (user && token) myGames(token).then((mine) => setMyLatest(mine[0] ? toCard(mine[0]) : null));
     else setMyLatest(null);
@@ -390,8 +398,97 @@ export default function App({ view = "home", gameName, indieId, featurePage }: {
 
         {view === "home" && (
         <section className="container hero">
+          {/* Garden flowers decorative layer */}
+          <div className="garden-flowers" aria-hidden="true">
+            <div className="garden-flower garden-flower--1" />
+            <div className="garden-flower garden-flower--2" />
+            <div className="garden-flower garden-flower--3" />
+            <div className="garden-flower garden-flower--4" />
+            <div className="garden-flower garden-flower--5" />
+            <div className="garden-flower garden-flower--6" />
+          </div>
+          
+          {/* Garden bees decorative layer - proper bee SVG designs */}
+          <div className="garden-bees" aria-hidden="true">
+            <div className="garden-bee garden-bee--1">
+              <svg viewBox="0 0 36 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Wings */}
+                <ellipse cx="10" cy="8" rx="8" ry="5" fill="#e8f5ff" opacity="0.7" transform="rotate(-30 10 8)"/>
+                <ellipse cx="26" cy="8" rx="8" ry="5" fill="#e8f5ff" opacity="0.7" transform="rotate(30 26 8)"/>
+                {/* Body */}
+                <ellipse cx="18" cy="14" rx="14" ry="10" fill="#292a23"/>
+                {/* Yellow stripes */}
+                <ellipse cx="18" cy="10" rx="10" ry="4" fill="#ffd93d"/>
+                <ellipse cx="18" cy="18" rx="10" ry="4" fill="#ffd93d"/>
+                {/* Head */}
+                <ellipse cx="18" cy="6" rx="6" ry="5" fill="#292a23"/>
+                {/* Eyes */}
+                <circle cx="15" cy="5" r="1.5" fill="white" opacity="0.8"/>
+                <circle cx="21" cy="5" r="1.5" fill="white" opacity="0.8"/>
+                {/* Antennae */}
+                <path d="M14 4 Q10 0 8 -2" stroke="#292a23" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                <path d="M22 4 Q26 0 28 -2" stroke="#292a23" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                <circle cx="8" cy="-2" r="1.5" fill="#292a23"/>
+                <circle cx="28" cy="-2" r="1.5" fill="#292a23"/>
+                {/* Stinger */}
+                <path d="M18 24 L18 28" stroke="#292a23" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </div>
+            <div className="garden-bee garden-bee--2">
+              <svg viewBox="0 0 36 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="10" cy="8" rx="7" ry="4.5" fill="#e8f5ff" opacity="0.7" transform="rotate(-25 10 8)"/>
+                <ellipse cx="26" cy="8" rx="7" ry="4.5" fill="#e8f5ff" opacity="0.7" transform="rotate(25 26 8)"/>
+                <ellipse cx="18" cy="14" rx="12" ry="9" fill="#292a23"/>
+                <ellipse cx="18" cy="10" rx="9" ry="3.5" fill="#ffd93d"/>
+                <ellipse cx="18" cy="17" rx="9" ry="3.5" fill="#ffd93d"/>
+                <ellipse cx="18" cy="6" rx="5" ry="4.5" fill="#292a23"/>
+                <circle cx="15" cy="5" r="1.3" fill="white" opacity="0.8"/>
+                <circle cx="21" cy="5" r="1.3" fill="white" opacity="0.8"/>
+                <path d="M14 4 Q10 0 8 -2" stroke="#292a23" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
+                <path d="M22 4 Q26 0 28 -2" stroke="#292a23" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
+                <circle cx="8" cy="-2" r="1.2" fill="#292a23"/>
+                <circle cx="28" cy="-2" r="1.2" fill="#292a23"/>
+                <path d="M18 23 L18 27" stroke="#292a23" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+            </div>
+            <div className="garden-bee garden-bee--3">
+              <svg viewBox="0 0 36 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="10" cy="8" rx="8" ry="5" fill="#e8f5ff" opacity="0.7" transform="rotate(-30 10 8)"/>
+                <ellipse cx="26" cy="8" rx="8" ry="5" fill="#e8f5ff" opacity="0.7" transform="rotate(30 26 8)"/>
+                <ellipse cx="18" cy="14" rx="14" ry="10" fill="#292a23"/>
+                <ellipse cx="18" cy="10" rx="10" ry="4" fill="#ffd93d"/>
+                <ellipse cx="18" cy="18" rx="10" ry="4" fill="#ffd93d"/>
+                <ellipse cx="18" cy="6" rx="6" ry="5" fill="#292a23"/>
+                <circle cx="15" cy="5" r="1.5" fill="white" opacity="0.8"/>
+                <circle cx="21" cy="5" r="1.5" fill="white" opacity="0.8"/>
+                <path d="M14 4 Q10 0 8 -2" stroke="#292a23" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                <path d="M22 4 Q26 0 28 -2" stroke="#292a23" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                <circle cx="8" cy="-2" r="1.5" fill="#292a23"/>
+                <circle cx="28" cy="-2" r="1.5" fill="#292a23"/>
+                <path d="M18 24 L18 28" stroke="#292a23" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </div>
+            <div className="garden-bee garden-bee--4">
+              <svg viewBox="0 0 36 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="10" cy="8" rx="7" ry="4.5" fill="#e8f5ff" opacity="0.7" transform="rotate(-25 10 8)"/>
+                <ellipse cx="26" cy="8" rx="7" ry="4.5" fill="#e8f5ff" opacity="0.7" transform="rotate(25 26 8)"/>
+                <ellipse cx="18" cy="14" rx="12" ry="9" fill="#292a23"/>
+                <ellipse cx="18" cy="10" rx="9" ry="3.5" fill="#ffd93d"/>
+                <ellipse cx="18" cy="17" rx="9" ry="3.5" fill="#ffd93d"/>
+                <ellipse cx="18" cy="6" rx="5" ry="4.5" fill="#292a23"/>
+                <circle cx="15" cy="5" r="1.3" fill="white" opacity="0.8"/>
+                <circle cx="21" cy="5" r="1.3" fill="white" opacity="0.8"/>
+                <path d="M14 4 Q10 0 8 -2" stroke="#292a23" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
+                <path d="M22 4 Q26 0 28 -2" stroke="#292a23" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
+                <circle cx="8" cy="-2" r="1.2" fill="#292a23"/>
+                <circle cx="28" cy="-2" r="1.2" fill="#292a23"/>
+                <path d="M18 23 L18 27" stroke="#292a23" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+            </div>
+          </div>
+          
           <p className="eyebrow">Big imagination. Played everywhere.</p>
-          <h1>Good vibes.<br /><mark>Good games.</mark></h1>
+          <h1><span>Good vibes.</span><br /><span><mark>Good games.</mark></span></h1>
           <p className="lead">
             Games made by builders in the community.{" "}<br />
             {example ? (
@@ -402,8 +499,37 @@ export default function App({ view = "home", gameName, indieId, featurePage }: {
             Pick one and play right in your browser.
           </p>
           <div className="actions">
-            <a className="btn" href="#games">Play now</a>
-            {!user && <button className="ghost" onClick={() => setSignInOpen(true)}>Create free account</button>}
+            <a className="btn" href="#games">Play now
+              <span className="btn-flower" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="24" cy="24" r="20" fill="#fff3a0" opacity="0.4"/>
+                  <g fill="#ff6b9d">
+                    <ellipse cx="24" cy="6" rx="6" ry="12"/>
+                    <ellipse cx="40" cy="22" rx="12" ry="6" transform="rotate(45 40 22)"/>
+                    <ellipse cx="24" cy="38" rx="6" ry="12"/>
+                    <ellipse cx="8" cy="22" rx="12" ry="6" transform="rotate(-45 8 22)"/>
+                  </g>
+                  <ellipse cx="24" cy="24" rx="5" ry="3" fill="#ff9f1c"/>
+                </svg>
+              </span>
+            </a>
+            {!user && (
+              <button className="ghost" onClick={() => setSignInOpen(true)}>
+                Create free account
+                <span className="ghost-flower" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="20" fill="#c8e6c9" opacity="0.4"/>
+                    <g fill="#66bb6a">
+                      <ellipse cx="24" cy="6" rx="6" ry="12" transform="rotate(-45 24 6)"/>
+                      <ellipse cx="40" cy="22" rx="12" ry="6" transform="rotate(45 40 22)"/>
+                      <ellipse cx="24" cy="38" rx="6" ry="12" transform="rotate(45 24 38)"/>
+                      <ellipse cx="8" cy="22" rx="12" ry="6" transform="rotate(-45 8 22)"/>
+                    </g>
+                    <ellipse cx="24" cy="24" rx="5" ry="3" fill="#388e3c"/>
+                  </svg>
+                </span>
+              </button>
+            )}
           </div>
         </section>
         )}

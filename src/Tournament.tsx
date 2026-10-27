@@ -11,6 +11,10 @@ import { Game, toCard } from "./games";
 import { PAGES, setSeo, TOURNAMENT_IMAGE } from "./seo";
 import ShareButton from "./features/share_cards/ShareButton";
 import { withHandle } from "./share";
+import { GameImage } from "./GameImage";
+
+// LOCAL DEV: Sample tournament data for preview without backend
+import { SAMPLE_TOURNAMENT } from "./sample-tournament";
 
 // Daily tournaments (startng-be app/tournaments.py): every day 5 random games for 24 hours, ending at 18:00
 // Nigeria time. Sharing on X enters you; your runs on those games count, and places give points
@@ -41,7 +45,12 @@ export function useTournament(user: User | null, active: boolean) {
   const refresh = useCallback(() => {
     getTournament(token())
       .then((t) => { setTournament(t); setError(""); })
-      .catch(() => setError("Couldn't load today's tournament. Try again in a moment."));
+      .catch(() => {
+        // LOCAL DEV FALLBACK: Use sample tournament data when API is unavailable
+        console.log("[Local Dev] Tournament API unavailable, using sample tournament data");
+        setTournament(SAMPLE_TOURNAMENT);
+        setError("");
+      });
   }, []);
   useEffect(() => {
     if (!active) return;
@@ -115,7 +124,7 @@ export function TournamentBanner({ tournament }: { tournament: Tournament | null
             const c = cardOf(g);
             return (
               <span key={g.name} className="art" style={{ background: `linear-gradient(135deg, ${c.colors[0]}, ${c.colors[1]})` }}>
-                {c.cover ? <img src={c.cover} alt="" loading="lazy" decoding="async" /> : <span>{c.title.charAt(0)}</span>}
+                <GameImage game={c} alt={`${c.title} game cover`} />
               </span>
             );
           })}
