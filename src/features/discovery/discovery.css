@@ -1,7 +1,9 @@
 .shelves { display: grid; gap: 22px; margin: 8px auto 28px; }
 .shelf h2 { font-size: 1.1rem; margin: 0 0 18px; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
 .shelf ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.shelf .art { aspect-ratio: 1; }
 .shelf .art span { font-size: 2.4rem; }
+.shelf .art .game-character { width: 100%; height: 100%; display: block; }
 .shelf .info { padding: 0 4px 4px; }
 .shelf .info h3 { font-size: 1rem; }
 .shelf .game { transition: border-color .15s; }

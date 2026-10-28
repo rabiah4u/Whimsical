@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Game } from "../../games";
 import type { PagePartProps } from "../registry";
 import { getShelves, type Shelves as ShelvesData } from "./api";
-import { GameImage } from "../../GameImage";
+import { GameCharacter } from "../../GameCharacter";
 
 // LOCAL DEV: Sample shelves data for preview without backend
 import { SAMPLE_SHELVES } from "../../sample-tournament";
@@ -44,7 +44,7 @@ export default function Shelves({ games, user }: PagePartProps) {
               <li key={g.slug} className="game">
                 <a className="game-link" href={`/games/${g.slug}`}>
                   <div className="art" style={{ background: `linear-gradient(135deg, ${g.colors[0]}, ${g.colors[1]})` }}>
-                    <GameImage game={g} alt={`${g.title} game cover`} />
+                    <GameCharacter game={g} size={120} />
                   </div>
                   <div className="info">
                     <h3>{g.title}</h3>

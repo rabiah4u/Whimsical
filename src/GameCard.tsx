@@ -3,7 +3,7 @@ import type { User } from "./api";
 import { cardPartsFor, type CardSlot } from "./features/registry";
 import { useFeatures } from "./features/flags";
 import type { Game } from "./games";
-import { GameImage } from "./GameImage";
+import { GameCharacter } from "./GameCharacter";
 
 const BEE_SVG = (
   <svg viewBox="0 0 28 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -65,7 +65,7 @@ export default function GameCard({ game: g, legendary = false, link, user, onSig
       </span>
       <a className="game-link" {...link}>
         <div className="art" style={{ background: `linear-gradient(135deg, ${g.colors[0]}, ${g.colors[1]})` }}>
-          <GameImage game={g} alt={`${g.title} game cover`} />
+          <GameCharacter game={g} size={160} />
           {slot("badges")}
         </div>
         <div className="info">
