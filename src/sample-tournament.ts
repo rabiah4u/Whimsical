@@ -15,9 +15,6 @@ function toTournamentGame(g: typeof SAMPLE_GAMES[0]): TournamentGame {
     leaderboard: g.board ?? [],
     players: g.plays,
     top: [],
-    by: g.by,
-    repo_url: "",
-    updated_at: new Date().toISOString()
   };
 }
 
