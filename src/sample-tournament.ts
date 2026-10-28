@@ -12,7 +12,7 @@ function toTournamentGame(g: typeof SAMPLE_GAMES[0]): TournamentGame {
     url: g.url,
     cover_url: g.cover,
     description: g.description,
-    leaderboard: g.board,
+    leaderboard: g.board ?? [],
     players: g.plays,
     top: [],
     by: g.by,
